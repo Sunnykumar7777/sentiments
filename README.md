@@ -1,7 +1,98 @@
-sentiment_analysis
-==============================
+# ML Ops (Sentiment Analysis)
 
-A short description of the project.
+This project implements an end-to-end machine learning pipeline with MLOps best practices, including data versioning (DVC), model training, model tracking, and deployment.
+
+## Prerequisites
+
+- Conda (24.11.1 or higher)
+- Python (3.12.3 or higher)
+
+## Installation
+
+1. First, install Anaconda from [Anaconda's official website](https://www.anaconda.com/download)
+
+2. conda install cookiecutter
+
+3. Clone this repository using cookiecutter:
+    ```
+    cookiecutter -c v1 https://github.com/drivendata/cookiecutter-data-science
+    ```
+   - It creates the structure for ML-model project.
+
+
+## Extension for VS-Code
+
+- Git 
+- DVC (Data Version Control) 
+
+## Create the Git repo (to track files and changes)
+1. Initialize git repo (Using terminal)
+    ```
+    git init
+    ```
+2. Add a remote repository to local Git
+    ```
+    git remote add origin <URL>
+    ```
+3. Add changes
+    ```
+    git add .
+    ```
+4. Commit changes
+    ```
+    git commit -m "Initial commit"
+    ```
+5. Push changes
+    ```
+    git push origin master
+    ```
+Alternative:
+- Install git extension on VS-code and perform same action using Git UI.
+
+## How to connect DVC
+1. First install dvc extension from vscode Extensions.
+2. Initialize DVC
+    ```
+    dvc init
+    ```
+3. Add data directory (it creates a data.dvc to track data)
+    ```
+    dvc add data
+    ```
+4. Add Models directory
+    ```
+    dvc add models
+    ```
+5. Managing Data Versions: Add Cloud directory (to upload data to remote storage)
+    ```
+    dvc remote add -d myremote cloud
+    ```
+6. Commit the changes
+    ``` 
+    dvc commit
+    ```
+7. Push the changes
+    ```
+    dvc push
+    ```
+8. Also view DVC experiments on VS code by clicking on DVC > Show Experiments
+
+
+## Running the pipeline
+First create stages on dvc.yaml then run the command:
+```
+dvc exp run
+```
+
+## Add .gitignore Configuration
+```
+/data
+/models
+/cloud
+/dvclive
+/mlruns
+*.joblib
+```
 
 Project Organization
 ------------
@@ -49,9 +140,20 @@ Project Organization
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
     │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    |── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    |
+    |── train.py           <- Script to check dvc experiments
+    |
+    |── mlflow_train.py    <- Script to check mlflow experiments
+    |
+    |── params.yaml        <- to store model configuration
+    |
+    |── data.dvc           <- to track and manage data versions.
+    |
+    └── dvc.yaml           <- to create and store model process pipeline 
 
 
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+   

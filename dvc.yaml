@@ -1,0 +1,18 @@
+stages: # Different stages for dvc pipline
+
+  make_dataset: # Script to preprocessing the row dataset.
+    cmd: python src\data\make_dataset.py .\data\raw\dataset_nlp.csv .\data\processed\cleaned_data.csv
+
+  build_features: # Script to feature extraction from dataset
+    cmd: python src\features\build_features.py .\data\processed\cleaned_data.csv .\data\interim\cleaned_features.csv
+
+  train_model: # Script to split train-test dataset and training the model.
+    cmd: python src\models\train_model.py .\data\interim\cleaned_features.csv .\models\gradient_boosting.joblib
+
+  predict_model: # Script to predict the model accuracy for test dataset
+    cmd: python src\models\predict_model.py .\models\gradient_boosting.joblib .\data\interim\test_data.csv .\models\predictions.txt
+
+  visualize: # EDA: to plot and visulaize data relationship with each other.
+    cmd: python src\visualization\visualize.py .\data\processed\cleaned_data.csv .\reports\figures
+    outs:
+    - dvclive
